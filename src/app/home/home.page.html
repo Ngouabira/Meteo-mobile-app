@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Météo
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,36 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Météo</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <form #f="ngForm" (ngSubmit)="getMeteo(f.value)">
+
+    <ion-item lines="full">
+      <ion-label position="floating">Ville</ion-label>
+      <ion-input autocapitalize name="ville" type="text" required  ngModel></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button  type="submit" color="primary" expand="block"  [disabled]="!f.valid">Chercher</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  
+ <ion-card *ngIf="meteo">
+    <ion-card-header style="font-weight: bolder;">
+      <ion-avatar>
+        <img src="assets/images/{{meteo.weather[0].main}}.png">
+      </ion-avatar>
+      <ion-label>Date: {{meteo.dt| date: 'MM/dd-HH:mm'}}</ion-label> <br>
+      <ion-label>Température: {{meteo.main.temp-273.15}} °C</ion-label> <br>
+      <ion-label>Humidité: {{meteo.main.humidity}}</ion-label> <br>
+      <ion-label>Le ciel est: {{meteo.weather[0].main}}</ion-label>
+    </ion-card-header>
+  
+    
+  </ion-card>
+
 </ion-content>
